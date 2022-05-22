@@ -4,6 +4,9 @@
   "publishConfig": {
     "access": "public"
   },
+  "exports": {
+    "." : "./src/etag-cache-leveldb.mjs"
+  },
   "sideEffects": false,
   "description": "etag cache based on leveldb",
   "contributors": [
