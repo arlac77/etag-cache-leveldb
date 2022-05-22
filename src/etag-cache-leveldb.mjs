@@ -1,12 +1,13 @@
-import { readFile, writeFile } from "fs/promises";
-
 export class ETagCacheLevelDB {
+  #db;
 
-  constructor(fileName) {
-    this.fileName = fileName;
+  constructor(db) {
+    this.#db = db;
   }
 
   header(url) {
+    this.#db.get(url);
+
     const entry = this.#entries.get(url);
     if (entry) {
       console.log("found", url, entry[0]);
@@ -20,8 +21,6 @@ export class ETagCacheLevelDB {
   }
 
   store(url, etag, json) {
-    //    console.log("store", url, etag);
-    this.#entries.set(url, [etag, json]);
-    this.persist();
+    this.#db.put(url, etag);
   }
 }

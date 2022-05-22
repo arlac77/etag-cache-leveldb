@@ -5,7 +5,7 @@
     "access": "public"
   },
   "exports": {
-    "." : "./src/etag-cache-leveldb.mjs"
+    ".": "./src/etag-cache-leveldb.mjs"
   },
   "sideEffects": false,
   "description": "etag cache based on leveldb",
@@ -25,10 +25,10 @@
     "lint:docs": "documentation lint ./src/**/*.mjs"
   },
   "devDependencies": {
-    "semantic-release": "^19.0.2",
-    "c8": "^7.11.3",
     "ava": "^4.2.0",
-    "documentation": "^13.2.5"
+    "c8": "^7.11.3",
+    "documentation": "^13.2.5",
+    "semantic-release": "^19.0.2"
   },
   "repository": {
     "type": "git",
@@ -43,5 +43,8 @@
       "arlac77/template-arlac77-github",
       "arlac77/template-esm-only"
     ]
+  },
+  "dependencies": {
+    "levelup": "^5.1.1"
   }
 }
