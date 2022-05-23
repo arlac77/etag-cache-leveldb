@@ -6,8 +6,6 @@ jobs:
     strategy:
       matrix:
         node-version:
-          - -16
-          - -18
           - 16.15.0
           - 18.2.0
     steps:
