@@ -24,6 +24,9 @@
     "lint": "npm run lint:docs",
     "lint:docs": "documentation lint ./src/**/*.mjs"
   },
+  "dependencies": {
+    "levelup": "^5.1.1"
+  },
   "devDependencies": {
     "ava": "^4.2.0",
     "c8": "^7.11.3",
@@ -45,8 +48,5 @@
       "arlac77/template-arlac77-github",
       "arlac77/template-esm-only"
     ]
-  },
-  "dependencies": {
-    "levelup": "^5.1.1"
   }
 }
