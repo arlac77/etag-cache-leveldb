@@ -9,6 +9,5 @@ test("initialize", async t => {
 
   const cache = new ETagCacheLevelDB(db);
 
-  t.deepEqual(cache.header("xxx"),{});
+  t.deepEqual(cache.header("xxx"), {});
 });
-
