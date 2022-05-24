@@ -1,3 +1,5 @@
+
+
 export class ETagCacheLevelDB {
 
   #db;
@@ -9,7 +11,7 @@ export class ETagCacheLevelDB {
   header(url) {
     const entry = this.#db.get(url);
 
-    return entry ? { "If-Match": entry[0] } : {};
+    return entry ? { "If-Match": entry } : {};
   }
 
   data(url) {
@@ -18,6 +20,6 @@ export class ETagCacheLevelDB {
   }
 
   store(url, etag, json) {
-    this.#db.put(url, etag);
+    return this.#db.put(url, etag);
   }
 }
