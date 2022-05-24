@@ -1,25 +1,35 @@
-
-
 export class ETagCacheLevelDB {
-
   #db;
 
   constructor(db) {
     this.#db = db;
   }
 
-  header(url) {
-    const entry = this.#db.get(url);
+  async addHeaders(url, headers) {
+    const entry = await this.#db.get(url);
 
-    return entry ? { "If-Match": entry } : {};
+    if (entry) {
+      headers["If-Match"] = entry;
+    }
   }
 
-  data(url) {
+  loadResponse(url) {
     const entry = this.#db.get(url);
-    return entry ? entry[1] : undefined;
+
+    if(entry) {
+      return new Response(entry);
+    }
   }
 
-  store(url, etag, json) {
-    return this.#db.put(url, etag);
+  storeResponse(response) {
+    if (response.ok) {
+      const etag = response.headers.get("etag");
+
+      if (etag) {
+        response = response.clone();
+
+        return this.#db.put(etag);
+      }
+    }
   }
 }
