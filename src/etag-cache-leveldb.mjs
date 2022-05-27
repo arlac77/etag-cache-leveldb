@@ -28,7 +28,8 @@ export class ETagCacheLevelDB {
       if (etag) {
         response = response.clone();
 
-        return this.#db.put(etag);
+        this.#db.put(response.url,etag);
+        this.#db.put(etag,response.body);
       }
     }
   }

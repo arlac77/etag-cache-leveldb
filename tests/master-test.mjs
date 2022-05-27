@@ -1,22 +1,33 @@
 import test from "ava";
 import tmp from "tmp";
+import { mkdir } from "fs/promises";
 import levelup from "levelup";
 import leveldown from "leveldown";
 import { ETagCacheLevelDB } from "etag-cache-leveldb";
 
 test("initialize", async t => {
-  const location = tmp.tmpNameSync();
-  const db = await levelup(leveldown(location));
+  const dir = new URL("../build", import.meta.url).pathname;
+  await mkdir(dir,{ recursive: true});
+
+  const db = await levelup(leveldown(dir));
 
   t.true(db.supports.promises, "promises");
-
-  console.log(location);
 
   const cache = new ETagCacheLevelDB(db);
 
   const url = "http://mydomain.com/";
+  const etag = "abc";
 
-  cache.store(url, "cccc", {});
+  let headers = { etag };
+  headers.get = k => headers[k];
+  
+  const response = { ok: true, url, headers, body: "", clone() { return this; }  };
 
-  t.deepEqual(cache.header(url), {});
+  cache.storeResponse(response);
+
+  headers = {};
+  
+  cache.addHeaders(url,headers);
+
+  t.deepEqual(headers,{});
 });
