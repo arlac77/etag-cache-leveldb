@@ -28,11 +28,11 @@ test("initialize", async t => {
   const response = { ok: true, url, headers, body: "", clone() { return this; }  };
 */
 
-  cache.storeResponse(response);
+  await cache.storeResponse(response);
 
   const headers = {};
   
-  cache.addHeaders(url, headers);
+  await cache.addHeaders(url, headers);
 
-  t.deepEqual(headers,{});
+  t.true(headers['If-Match'].length > 0);
 });

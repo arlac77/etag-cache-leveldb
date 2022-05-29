@@ -9,7 +9,7 @@ export class ETagCacheLevelDB {
     const entry = await this.#db.get(url);
 
     if (entry) {
-      headers["If-Match"] = entry;
+      headers["If-Match"] = entry.toString();
     }
   }
 
@@ -31,22 +31,16 @@ export class ETagCacheLevelDB {
         console.log("store", etag);
         this.#db.put(response.url, etag);
 
-        try {
         const chunks = [];
         
         for await (const chunk of response.body) {
-          console.log("read body", chunk.length);
+          //console.log("read body", chunk.length);
           chunks.push(chunk);
         }
 
         console.log("store body",chunks.join('').length);        
 
         await this.#db.put(etag, chunks.join(''));
-        }
-        catch(e) {
-        console.log(e);
-        	throw e;
-        }
       }
     }
   }
