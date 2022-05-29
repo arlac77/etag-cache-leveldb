@@ -4,6 +4,7 @@ import { mkdir } from "fs/promises";
 import levelup from "levelup";
 import leveldown from "leveldown";
 import { ETagCacheLevelDB } from "etag-cache-leveldb";
+import fetch from "node-fetch";
 
 test("initialize", async t => {
   const dir = new URL("../build", import.meta.url).pathname;
@@ -15,19 +16,23 @@ test("initialize", async t => {
 
   const cache = new ETagCacheLevelDB(db);
 
-  const url = "http://mydomain.com/";
-  const etag = "abc";
+  const url = "https://api.github.com/";
 
+  const response = await fetch(url);
+
+  /*
+  const etag = "abc";
   let headers = { etag };
   headers.get = k => headers[k];
   
   const response = { ok: true, url, headers, body: "", clone() { return this; }  };
+*/
 
   cache.storeResponse(response);
 
-  headers = {};
+  const headers = {};
   
-  cache.addHeaders(url,headers);
+  cache.addHeaders(url, headers);
 
   t.deepEqual(headers,{});
 });
