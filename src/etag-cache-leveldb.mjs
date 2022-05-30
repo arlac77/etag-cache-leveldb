@@ -1,22 +1,24 @@
 export class ETagCacheLevelDB {
   #db;
 
-  constructor(db) {
+  constructor(db, options) {
     this.#db = db;
   }
 
   async addHeaders(url, headers) {
     try {
-      return (headers["If-Match"] = String.fromCharCode.apply(
-        null,
-        await this.#db.get(url)
-      ));
+      const entry = await this.#db.get(url);
+
+      headers["If-Match"] = entry.toString();
     } catch {}
   }
 
   async loadResponse(url) {
-    const entry = await this.#db.get(url);
-    return new Response(entry);
+    const entry = this.#db.get(url);
+
+    if (entry) {
+      return new Response(entry);
+    }
   }
 
   async storeResponse(response) {
@@ -26,8 +28,19 @@ export class ETagCacheLevelDB {
       if (etag) {
         response = response.clone();
 
-        await this.#db.put(response.url, etag);
-        await this.#db.put(etag, response.body);
+        console.log("store", etag);
+        this.#db.put(response.url, etag);
+
+        const chunks = [];
+
+        for await (const chunk of response.body) {
+          //console.log("read body", chunk.length);
+          chunks.push(chunk);
+        }
+
+        console.log("store body", chunks.join("").length);
+
+        await this.#db.put(etag, chunks.join(""));
       }
     }
   }
