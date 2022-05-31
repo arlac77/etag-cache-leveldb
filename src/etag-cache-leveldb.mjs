@@ -38,9 +38,9 @@ export class ETagCacheLevelDB {
           chunks.push(chunk);
         }
 
-        console.log("store body", chunks.join("").length);
-
-        await this.#db.put(etag, chunks.join(""));
+        const body = chunks.join("");
+        console.log("store body", body.length);
+        await this.#db.put(etag, body);
       }
     }
   }
