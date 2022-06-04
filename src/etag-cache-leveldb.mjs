@@ -1,3 +1,10 @@
+/**
+ * Stores etags and bodies nto leveldb.
+ * reconstructs response with body if response matches.
+ * will store in the cache:
+ * url : etag
+ * etag : body
+ */
 export class ETagCacheLevelDB {
   #db;
 
@@ -29,7 +36,7 @@ export class ETagCacheLevelDB {
         response = response.clone();
 
         console.log("store", etag);
-        this.#db.put(response.url, etag);
+        await this.#db.put(response.url, etag);
 
         const chunks = [];
 
