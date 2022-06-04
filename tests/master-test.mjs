@@ -19,6 +19,8 @@ test("initialize", async t => {
 
   const response = await fetch(url);
 
+  const etag = response.headers.get('etag');
+  
   /*
   const etag = "abc";
   let headers = { etag };
@@ -33,5 +35,11 @@ test("initialize", async t => {
   
   await cache.addHeaders(url, headers);
 
-  t.true(headers['If-Match'].length > 0);
+  //console.log(headers['If-Match']);
+  
+  t.is(headers['If-Match'], etag);
+
+  const response2 = await fetch(url, { headers });
+
+  t.is(response2.status, 200);
 });
