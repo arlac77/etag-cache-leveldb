@@ -30,11 +30,11 @@ export class ETagCacheLevelDB {
 
   async storeResponse(response) {
     if (response.ok) {
+      response = response.clone();
+
       const etag = await response.headers.get("etag");
 
       if (etag) {
-        response = response.clone();
-
         console.log("store", etag);
         await this.#db.put(response.url, etag);
 
