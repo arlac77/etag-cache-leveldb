@@ -37,9 +37,9 @@ test("initialize", async t => {
 
   //console.log(headers['If-Match']);
   
-  t.is(headers['If-Match'], etag);
+  t.is(headers['If-None-Match'], etag);
 
   const response2 = await fetch(url, { headers });
 
-  t.is(response2.status, 200);
+  t.is(response2.status, 304);
 });
