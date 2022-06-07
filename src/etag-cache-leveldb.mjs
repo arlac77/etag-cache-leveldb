@@ -16,38 +16,52 @@ export class ETagCacheLevelDB {
     try {
       const entry = await this.#db.get(url);
 
-      headers["If-Match"] = entry.toString();
+      headers["If-None-Match"] = entry.toString();
     } catch {}
   }
 
   async loadResponse(url) {
-    const entry = this.#db.get(url);
+    try {
+      console.log("loadResponse", url);
+      const entry = this.#db.get(url);
 
-    if (entry) {
-      return new Response(entry);
+      console.log(entry.length);
+      
+      if (entry) {
+        return new Response(entry);
+      }
+    } catch (e) {
+      console.log(e);
     }
   }
 
   async storeResponse(response) {
     if (response.ok) {
-      response = response.clone();
 
-      const etag = await response.headers.get("etag");
+      try {
+        response = response.clone();
 
-      if (etag) {
-        console.log("store", etag);
-        await this.#db.put(response.url, etag);
+        console.log("storeResponse", response.url);
 
-        const chunks = [];
+        const etag = await response.headers.get("etag");
 
-        for await (const chunk of response.body) {
-          //console.log("read body", chunk.length);
-          chunks.push(chunk);
+        if (etag) {
+          console.log("store", etag);
+          await this.#db.put(response.url, etag);
+
+          const chunks = [];
+
+          for await (const chunk of response.body) {
+            //console.log("read body", chunk.length);
+            chunks.push(chunk);
+          }
+
+          const body = chunks.join("");
+          console.log("store body", body.length);
+          await this.#db.put(etag, body);
         }
-
-        const body = chunks.join("");
-        console.log("store body", body.length);
-        await this.#db.put(etag, body);
+      } catch (e) {
+        console.log(e);
       }
     }
   }
