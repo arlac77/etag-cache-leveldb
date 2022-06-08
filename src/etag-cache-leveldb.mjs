@@ -51,8 +51,8 @@ export class ETagCacheLevelDB {
   async loadResponse(url) {
     try {
       const etag = await this.#db.get(url);
-      console.log("loadResponse", url, etag);
       const entry = await this.#db.get(etag);
+      console.log("loadResponse", url, etag, entry ? entry.length : "null");
 
       if (entry) {
         return new Response(entry, { status: 200 });
