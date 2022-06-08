@@ -20,33 +20,14 @@ export class ETagCacheLevelDB {
     } catch {}
   }
 
-  async loadResponse(url) {
-    try {
-      console.log("loadResponse", url);
-      const entry = this.#db.get(url);
-
-      console.log(entry.length);
-      
-      if (entry) {
-        return new Response(entry);
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  }
-
   async storeResponse(response) {
     if (response.ok) {
-
       try {
         response = response.clone();
-
-        console.log("storeResponse", response.url);
 
         const etag = await response.headers.get("etag");
 
         if (etag) {
-          console.log("store", etag);
           await this.#db.put(response.url, etag);
 
           const chunks = [];
@@ -57,12 +38,27 @@ export class ETagCacheLevelDB {
           }
 
           const body = chunks.join("");
-          console.log("store body", body.length);
           await this.#db.put(etag, body);
+
+          console.log("storeResponse", response.url, etag, body.length);
         }
       } catch (e) {
         console.log(e);
       }
+    }
+  }
+
+  async loadResponse(url) {
+    try {
+      const etag = await this.#db.get(url);
+      console.log("loadResponse", url, etag);
+      const entry = await this.#db.get(etag);
+
+      if (entry) {
+        return new Response(entry, { status: 200 });
+      }
+    } catch (e) {
+      console.log(e);
     }
   }
 }

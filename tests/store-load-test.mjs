@@ -5,13 +5,11 @@ import leveldown from "leveldown";
 import { ETagCacheLevelDB } from "etag-cache-leveldb";
 import fetch from "node-fetch";
 
-test("initialize", async t => {
+test("header store load", async t => {
   const dir = new URL("../build", import.meta.url).pathname;
   await mkdir(dir, { recursive: true });
 
   const db = await levelup(leveldown(dir));
-
-  t.true(db.supports.promises, "promises");
 
   const cache = new ETagCacheLevelDB(db);
 
@@ -19,27 +17,25 @@ test("initialize", async t => {
 
   const response = await fetch(url);
 
-  const etag = response.headers.get('etag');
-  
-  /*
-  const etag = "abc";
-  let headers = { etag };
-  headers.get = k => headers[k];
-  
-  const response = { ok: true, url, headers, body: "", clone() { return this; }  };
-*/
+  const etag = response.headers.get("etag");
 
   await cache.storeResponse(response);
 
   const headers = {};
-  
+
   await cache.addHeaders(url, headers);
 
-  //console.log(headers['If-Match']);
-  
-  t.is(headers['If-None-Match'], etag);
+  t.is(headers["If-None-Match"], etag);
 
   const response2 = await fetch(url, { headers });
 
   t.is(response2.status, 304);
+
+  const response3 = await cache.loadResponse(url);
+
+  t.is(response.status, 200);
+
+  const json = await response3.json();
+
+  t.is(json.current_user_url, "https://api.github.com/user");  
 });
