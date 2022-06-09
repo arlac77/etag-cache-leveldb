@@ -48,11 +48,22 @@ export class ETagCacheLevelDB {
     }
   }
 
-  async loadResponse(url) {
+  async loadResponse(response) {
     try {
-      const etag = await this.#db.get(url);
+      let etag = await response.headers.get("etag");
+
+      if (!etag) {
+        console.log("no etag header found using url", response.url);
+        etag = await this.#db.get(response.url);
+      }
+
       const entry = await this.#db.get(etag);
-      console.log("loadResponse", url, etag, entry ? entry.length : "null");
+      console.log(
+        "loadResponse",
+        response.url,
+        etag,
+        entry ? entry.length : "null"
+      );
 
       if (entry) {
         return new Response(entry, { status: 200 });

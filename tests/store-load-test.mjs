@@ -31,7 +31,7 @@ test("header store load", async t => {
 
   t.is(response2.status, 304);
 
-  const response3 = await cache.loadResponse(url);
+  const response3 = await cache.loadResponse(response2);
 
   t.is(response.status, 200);
 
