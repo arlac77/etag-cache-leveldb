@@ -1,6 +1,6 @@
 /**
- * Stores etags and bodies nto leveldb.
- * reconstructs response with body if response matches.
+ * Stores etags and bodies into leveldb.
+ * reconstructs response with body if etag or url matches.
  * will store in the cache:
  * url : etag
  * etag : body
