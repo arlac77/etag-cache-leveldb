@@ -3,7 +3,11 @@ import { mkdir } from "fs/promises";
 import levelup from "levelup";
 import leveldown from "leveldown";
 import { ETagCacheLevelDB } from "etag-cache-leveldb";
-import fetch from "node-fetch";
+import fetch, { Response } from "node-fetch";
+
+if(!globalThis.Response) {
+  globalThis.Response = Response;
+}
 
 test("header store load", async t => {
   const dir = new URL("../build", import.meta.url).pathname;
