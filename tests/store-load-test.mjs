@@ -38,6 +38,7 @@ test("header store load", async t => {
   const response3 = await cache.loadResponse(response2);
 
   t.is(response.status, 200);
+  t.true(response.ok);
 
   const json = await response3.json();
 
