@@ -49,9 +49,9 @@ export class ETagCacheLevelDB {
   }
 
   async loadResponse(response) {
-    try {
-      let etag = await response.headers.get("etag");
+    let etag = await response.headers.get("etag");
 
+    try {
       if (!etag) {
         console.log("no etag header found using url", response.url);
         etag = await this.#db.get(response.url);
@@ -69,7 +69,7 @@ export class ETagCacheLevelDB {
         return new Response(entry, { status: 200 });
       }
     } catch (e) {
-      console.log(e);
+      console.log(e, etag);
     }
   }
 }
