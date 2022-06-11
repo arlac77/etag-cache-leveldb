@@ -1,11 +1,11 @@
 import test from "ava";
-import { mkdir } from "fs/promises";
+import { mkdir } from "node:fs/promises";
 import levelup from "levelup";
 import leveldown from "leveldown";
 import { ETagCacheLevelDB } from "etag-cache-leveldb";
 import fetch, { Response } from "node-fetch";
 
-if(!globalThis.Response) {
+if (!globalThis.Response) {
   globalThis.Response = Response;
 }
 
@@ -42,5 +42,11 @@ test("header store load", async t => {
 
   const json = await response3.json();
 
-  t.is(json.current_user_url, "https://api.github.com/user");  
+  t.is(json.current_user_url, "https://api.github.com/user");
+
+  t.deepEqual(cache.statistics, {
+    numberOfLoadedBytes: 2396,
+    numberOfLoadedRequests: 1,
+    numberOfStoredRequests: 1
+  });
 });

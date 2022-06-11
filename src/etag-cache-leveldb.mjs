@@ -7,6 +7,9 @@
  */
 export class ETagCacheLevelDB {
   #db;
+  #numberOfStoredRequests = 0;
+  #numberOfLoadedRequests = 0;
+  #numberOfLoadedBytes = 0;
 
   constructor(db, options) {
     this.#db = db;
@@ -20,7 +23,15 @@ export class ETagCacheLevelDB {
     } catch {}
   }
 
-  async storeResponse(response,options={}) {
+  get statistics() {
+    return {
+      numberOfStoredRequests: this.#numberOfStoredRequests,
+      numberOfLoadedRequests: this.#numberOfLoadedRequests,
+      numberOfLoadedBytes: this.#numberOfLoadedBytes
+    };
+  }
+
+  async storeResponse(response) {
     if (response.ok) {
       try {
         response = response.clone();
@@ -39,49 +50,44 @@ export class ETagCacheLevelDB {
           const body = chunks.join("");
           await this.#db.put(etag, body);
 
-         /* if(options.report) {
+          /* if(options.report) {
             console.log("storeResponse", response.url, etag, body.length);
           }*/
+
+          this.#numberOfStoredRequests++;
         }
       } catch (e) {
-        if(options.report) {
-          options.report(e);
-        }
-        //console.log(e);
+        console.error(e);
       }
     }
   }
 
-  async loadResponse(response,options={}) {
+  async loadResponse(response) {
     let etag = raw(await response.headers.get("etag"));
 
     try {
       if (!etag) {
-        console.log("no etag header found using url", response.url);
         etag = await this.#db.get(response.url);
       }
 
       const entry = await this.#db.get(etag);
 
-      if(options.report) {
-        options.report(
-        "loadResponse",
-        response.url,
-        etag);
-	  }
-	  
+      /*if (options.report) {
+        options.report("loadResponse", response.url, etag);
+      }*/
+
       if (entry) {
+        this.#numberOfLoadedRequests++;
+        this.#numberOfLoadedBytes += entry.length;
+
         return new Response(entry, { status: 200 });
       }
     } catch (e) {
-      if(options.report) {
-        options.report(e, etag);
-      }
+      console.error(e);
     }
   }
 }
 
-function raw(etag)
-{
-  return etag.replace(/W\//,'');
+function raw(etag) {
+  return etag.replace(/W\//, "");
 }
