@@ -44,9 +44,7 @@ test("header store load", async t => {
 
   t.is(json.current_user_url, "https://api.github.com/user");
 
-  t.deepEqual(cache.statistics, {
-    numberOfLoadedBytes: 2396,
-    numberOfLoadedRequests: 1,
-    numberOfStoredRequests: 1
-  });
+  t.is(cache.statistics.numberOfLoadedRequests,1);
+  t.true(cache.statistics.numberOfLoadedBytes > 2300);
+  t.is(cache.statistics.numberOfStoredRequests,1);
 });
