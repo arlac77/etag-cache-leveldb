@@ -2,7 +2,7 @@ import test from "ava";
 import { mkdir } from "node:fs/promises";
 import levelup from "levelup";
 import leveldown from "leveldown";
-import { ETagCacheLevelDB } from "etag-cache-leveldb";
+import { ETagCacheLevelDB, rawTagData } from "etag-cache-leveldb";
 import fetch, { Response } from "node-fetch";
 
 if (!globalThis.Response) {
@@ -29,7 +29,7 @@ test("header store load", async t => {
 
   await cache.addHeaders(url, headers);
 
-  t.is(headers["If-None-Match"], etag);
+  t.is(rawTagData(headers["If-None-Match"]), rawTagData(etag));
 
   const response2 = await fetch(url, { headers });
 

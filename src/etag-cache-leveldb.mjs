@@ -36,7 +36,7 @@ export class ETagCacheLevelDB {
       try {
         response = response.clone();
 
-        const etag = raw(await response.headers.get("etag"));
+        const etag = rawTagData(await response.headers.get("etag"));
 
         if (etag) {
           await this.#db.put(response.url, etag);
@@ -63,7 +63,7 @@ export class ETagCacheLevelDB {
   }
 
   async loadResponse(response) {
-    let etag = raw(await response.headers.get("etag"));
+    let etag = rawTagData(await response.headers.get("etag"));
 
     try {
       if (!etag) {
@@ -88,6 +88,6 @@ export class ETagCacheLevelDB {
   }
 }
 
-function raw(etag) {
+export function rawTagData(etag) {
   return etag.replace(/W\//, "");
 }
