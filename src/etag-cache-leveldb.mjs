@@ -36,11 +36,9 @@ export class ETagCacheLevelDB {
       try {
         response = response.clone();
 
-        const etag = rawTagData(await response.headers.get("etag"));
+        const etag = rawTagData(response.headers.get("etag"));
 
         if (etag) {
-          await this.#db.put(response.url, etag);
-
           const chunks = [];
 
           for await (const chunk of response.body) {
@@ -48,13 +46,17 @@ export class ETagCacheLevelDB {
           }
 
           const body = chunks.join("");
-          await this.#db.put(etag, body);
 
           /* if(options.report) {
             console.log("storeResponse", response.url, etag, body.length);
           }*/
 
           this.#numberOfStoredRequests++;
+
+          return Promise.all([
+            this.#db.put(response.url, etag),
+            this.#db.put(etag, body)
+          ]);
         }
       } catch (e) {
         console.error(e);
