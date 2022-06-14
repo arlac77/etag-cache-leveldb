@@ -48,4 +48,5 @@ test("header store load", async t => {
   t.is(cache.statistics.numberOfLoadedRequests,1);
   t.true(cache.statistics.numberOfLoadedBytes > 1000);
   t.is(cache.statistics.numberOfStoredRequests,1);
+  t.true(cache.statistics.numberOfStoredBytes > 1000);
 });

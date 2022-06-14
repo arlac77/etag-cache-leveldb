@@ -8,6 +8,7 @@
 export class ETagCacheLevelDB {
   #db;
   #numberOfStoredRequests = 0;
+  #numberOfStoredBytes = 0;
   #numberOfLoadedRequests = 0;
   #numberOfLoadedBytes = 0;
 
@@ -26,6 +27,7 @@ export class ETagCacheLevelDB {
   get statistics() {
     return {
       numberOfStoredRequests: this.#numberOfStoredRequests,
+      numberOfStoredBytes: this.#numberOfStoredBytes,
       numberOfLoadedRequests: this.#numberOfLoadedRequests,
       numberOfLoadedBytes: this.#numberOfLoadedBytes
     };
@@ -52,6 +54,7 @@ export class ETagCacheLevelDB {
           }*/
 
           this.#numberOfStoredRequests++;
+          this.#numberOfStoredBytes += body.length;
 
           return Promise.all([
             this.#db.put(response.url, etag),
@@ -65,7 +68,7 @@ export class ETagCacheLevelDB {
   }
 
   async loadResponse(response) {
-    let etag = rawTagData(await response.headers.get("etag"));
+    let etag = rawTagData(response.headers.get("etag"));
 
     try {
       if (!etag) {
