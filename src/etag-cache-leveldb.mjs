@@ -1,7 +1,7 @@
 /**
  * Stores etags and bodies into leveldb.
- * reconstructs response with body if etag or url matches.
- * will store in the cache:
+ * Reconstructs response with body if etag or url matches.
+ * Will store in the cache:
  * url : etag
  * etag : body
  */
@@ -41,6 +41,8 @@ export class ETagCacheLevelDB {
         const etag = rawTagData(response.headers.get("etag"));
 
         if (etag) {
+          const promiseA = this.#db.put(response.url, etag);
+
           const chunks = [];
 
           for await (const chunk of response.body) {
@@ -49,15 +51,11 @@ export class ETagCacheLevelDB {
 
           const body = chunks.join("");
 
-          /* if(options.report) {
-            console.log("storeResponse", response.url, etag, body.length);
-          }*/
-
           this.#numberOfStoredRequests++;
           this.#numberOfStoredBytes += body.length;
 
           return Promise.all([
-            this.#db.put(response.url, etag),
+            promiseA,
             this.#db.put(etag, body)
           ]);
         }
@@ -76,10 +74,6 @@ export class ETagCacheLevelDB {
       }
 
       const entry = await this.#db.get(etag);
-
-      /*if (options.report) {
-        options.report("loadResponse", response.url, etag);
-      }*/
 
       if (entry) {
         this.#numberOfLoadedRequests++;
