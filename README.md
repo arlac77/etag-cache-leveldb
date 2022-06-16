@@ -25,8 +25,8 @@ etag cache based on leveldb
 ## ETagCacheLevelDB
 
 Stores etags and bodies into leveldb.
-reconstructs response with body if etag or url matches.
-will store in the cache:
+Reconstructs response with body if etag or url matches.
+Will store in the cache:
 url : etag
 etag : body
 
