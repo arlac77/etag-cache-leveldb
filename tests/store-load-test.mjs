@@ -2,8 +2,8 @@ import test from "ava";
 import { mkdir } from "node:fs/promises";
 import levelup from "levelup";
 import leveldown from "leveldown";
-import { ETagCacheLevelDB, rawTagData } from "etag-cache-leveldb";
 import fetch, { Response } from "node-fetch";
+import { ETagCacheLevelDB, rawTagData } from "etag-cache-leveldb";
 
 if (!globalThis.Response) {
   globalThis.Response = Response;

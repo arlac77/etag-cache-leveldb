@@ -88,5 +88,5 @@ export class ETagCacheLevelDB {
 }
 
 export function rawTagData(etag) {
-  return etag.replace(/W\//, "");
+  return etag && etag.replace(/W\//, "");
 }
