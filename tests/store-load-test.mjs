@@ -27,7 +27,7 @@ test("header store load", async t => {
 
   const headers = {};
 
-  await cache.addHeaders(url, headers);
+  t.true(await cache.addHeaders(url, headers));
 
   t.is(rawTagData(headers["If-None-Match"]), rawTagData(etag));
 

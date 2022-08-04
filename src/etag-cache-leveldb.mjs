@@ -16,12 +16,21 @@ export class ETagCacheLevelDB {
     this.#db = db;
   }
 
+  /**
+   * Adds the "If-None-Match" header if etag is found for the url.
+   * @param {string|URL} url 
+   * @param {Object} headers 
+   * @returns {boolean} true if etag was found in cache and hader has been added
+   */
   async addHeaders(url, headers) {
     try {
       const entry = await this.#db.get(url);
 
       headers["If-None-Match"] = entry.toString();
+      return true;
     } catch {}
+
+    return false;
   }
 
   /**
