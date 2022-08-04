@@ -46,12 +46,17 @@ const cachedResponse = await cache.loadResponse(responseWithETag);
 
 ### Table of Contents
 
-- [etag-cache-leveldb](#etag-cache-leveldb)
-- [example](#example)
-- [API](#api)
-    - [Table of Contents](#table-of-contents)
-  - [ETagCacheLevelDB](#etagcacheleveldb)
-    - [Parameters](#parameters)
+*   [ETagCacheLevelDB](#etagcacheleveldb)
+    *   [Parameters](#parameters)
+    *   [addHeaders](#addheaders)
+        *   [Parameters](#parameters-1)
+    *   [statistics](#statistics)
+    *   [storeResponse](#storeresponse)
+        *   [Parameters](#parameters-2)
+    *   [loadResponse](#loadresponse)
+        *   [Parameters](#parameters-3)
+*   [rawTagData](#rawtagdata)
+    *   [Parameters](#parameters-4)
 
 ## ETagCacheLevelDB
 
@@ -65,3 +70,50 @@ etag : body
 
 *   `db`  
 *   `options`  
+
+### addHeaders
+
+Adds the "If-None-Match" header if etag is found for the url.
+
+#### Parameters
+
+*   `url` **([string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) | [URL](https://developer.mozilla.org/docs/Web/API/URL/URL))** 
+*   `headers` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+
+Returns **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** true if etag was found in cache and hader has been added
+
+### statistics
+
+Deliver statisics data.
+
+Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+
+### storeResponse
+
+Stores response in the cache.
+
+#### Parameters
+
+*   `response` **[Response](https://developer.mozilla.org/docs/Web/Guide/HTML/HTML5)** as produced by fetch
+
+Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)<[undefined](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined)>** 
+
+### loadResponse
+
+Constructs a new Response feed from the cahce is a matching etag is found in the cache.
+
+#### Parameters
+
+*   `response` **[Response](https://developer.mozilla.org/docs/Web/Guide/HTML/HTML5)** as provided by fetch
+
+Returns **[Response](https://developer.mozilla.org/docs/Web/Guide/HTML/HTML5)** 
+
+## rawTagData
+
+Strips away etagflags (weak ant the like)
+
+### Parameters
+
+*   `etag` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** raw etag
