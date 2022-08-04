@@ -24,6 +24,10 @@ export class ETagCacheLevelDB {
     } catch {}
   }
 
+  /**
+   * Deliver statisics data.
+   * @return {Object}
+   */
   get statistics() {
     return {
       numberOfStoredRequests: this.#numberOfStoredRequests,
@@ -33,6 +37,11 @@ export class ETagCacheLevelDB {
     };
   }
 
+  /**
+   * Stores response in the cache.
+   * @param {Response} response as produced by fetch
+   * @returns {Promise<undefined>}
+   */
   async storeResponse(response) {
     if (response.ok) {
       try {
@@ -65,6 +74,11 @@ export class ETagCacheLevelDB {
     }
   }
 
+  /**
+   * Constructs a new Response feed from the cahce is a matching etag is found in the cache.
+   * @param {Response} response as provided by fetch
+   * @returns {Response}
+   */
   async loadResponse(response) {
     let etag = rawTagData(response.headers.get("etag"));
 
