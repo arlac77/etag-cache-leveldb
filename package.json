@@ -8,6 +8,13 @@
   "exports": {
     ".": "./src/etag-cache-leveldb.mjs"
   },
+  "keywords": [
+    "fetch",
+    "cache",
+    "http",
+    "etag",
+    "leveldb"
+  ],
   "description": "etag cache based on leveldb",
   "contributors": [
     {
