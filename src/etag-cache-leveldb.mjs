@@ -101,6 +101,11 @@ export class ETagCacheLevelDB {
   }
 }
 
+/**
+ * Strips away etagflags (weak ant the like)
+ * @param {string} etag 
+ * @returns {string} raw etag
+ */
 export function rawTagData(etag) {
   return etag && etag.replace(/W\//, "");
 }
