@@ -35,12 +35,13 @@ test("header store load", async t => {
 
   t.is(response2.status, 304);
 
-  const response3 = await cache.loadResponse(response2);
+  const cachedResponse = await cache.loadResponse(response2);
 
-  t.is(response.status, 200);
-  t.true(response.ok);
+  t.is(cachedResponse.status, 200);
+  //t.is(cachedResponse.url, url);
+  t.true(cachedResponse.ok);
 
-  const json = await response3.json();
+  const json = await cachedResponse.json();
 
   t.is(json.current_user_url, "https://api.github.com/user");
 
