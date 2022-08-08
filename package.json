@@ -8,14 +8,14 @@
   "exports": {
     ".": "./src/etag-cache-leveldb.mjs"
   },
+  "description": "etag cache based on leveldb",
   "keywords": [
-    "fetch",
     "cache",
-    "http",
     "etag",
+    "fetch",
+    "http",
     "leveldb"
   ],
-  "description": "etag cache based on leveldb",
   "contributors": [
     {
       "name": "Markus Felten",
