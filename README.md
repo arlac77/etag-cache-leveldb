@@ -110,7 +110,7 @@ Returns **[Response](https://developer.mozilla.org/docs/Web/Guide/HTML/HTML5)**
 
 ## rawTagData
 
-Strips away etagflags (weak ant the like)
+Strips away etag flags (weak ant the like)
 
 ### Parameters
 
