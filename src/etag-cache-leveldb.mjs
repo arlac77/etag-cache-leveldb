@@ -111,7 +111,7 @@ export class ETagCacheLevelDB {
 }
 
 /**
- * Strips away etagflags (weak ant the like)
+ * Strips away etag flags (weak ant the like)
  * @param {string} etag 
  * @returns {string} raw etag
  */
