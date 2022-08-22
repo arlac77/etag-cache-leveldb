@@ -68,8 +68,8 @@ etag : body
 
 ### Parameters
 
-*   `db`  
-*   `options`  
+*   `db` &#x20;
+*   `options` &#x20;
 
 ### addHeaders
 
@@ -77,8 +77,8 @@ Adds the "If-None-Match" header if etag is found for the url.
 
 #### Parameters
 
-*   `url` **([string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) | [URL](https://developer.mozilla.org/docs/Web/API/URL/URL))** 
-*   `headers` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+*   `url` **([string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) | [URL](https://developer.mozilla.org/docs/Web/API/URL/URL))**&#x20;
+*   `headers` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**&#x20;
 
 Returns **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** true if etag was found in cache and hader has been added
 
@@ -86,7 +86,7 @@ Returns **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/
 
 Deliver statisics data.
 
-Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**&#x20;
 
 ### storeResponse
 
@@ -96,7 +96,7 @@ Stores response in the cache.
 
 *   `response` **[Response](https://developer.mozilla.org/docs/Web/Guide/HTML/HTML5)** as produced by fetch
 
-Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)<[undefined](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined)>** 
+Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)<[undefined](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined)>**&#x20;
 
 ### loadResponse
 
@@ -106,7 +106,7 @@ Constructs a new Response feed from the cahce is a matching etag is found in the
 
 *   `response` **[Response](https://developer.mozilla.org/docs/Web/Guide/HTML/HTML5)** as provided by fetch
 
-Returns **[Response](https://developer.mozilla.org/docs/Web/Guide/HTML/HTML5)** 
+Returns **[Response](https://developer.mozilla.org/docs/Web/Guide/HTML/HTML5)**&#x20;
 
 ## rawTagData
 
@@ -114,6 +114,6 @@ Strips away etag flags (weak ant the like)
 
 ### Parameters
 
-*   `etag` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+*   `etag` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
 
 Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** raw etag
