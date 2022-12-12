@@ -38,6 +38,7 @@ test("header store load", async t => {
   const cachedResponse = await cache.loadResponse(response2);
 
   t.is(cachedResponse.status, 200);
+  t.is(cachedResponse.statusText, "OK from cache");
   //t.is(cachedResponse.url, url);
   t.true(cachedResponse.ok);
 
