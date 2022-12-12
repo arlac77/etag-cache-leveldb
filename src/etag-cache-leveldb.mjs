@@ -18,8 +18,8 @@ export class ETagCacheLevelDB {
 
   /**
    * Adds the "If-None-Match" header if etag is found for the url.
-   * @param {string|URL} url 
-   * @param {Object} headers 
+   * @param {string|URL} url
+   * @param {Object} headers
    * @returns {boolean} true if etag was found in cache and hader has been added
    */
   async addHeaders(url, headers) {
@@ -72,10 +72,7 @@ export class ETagCacheLevelDB {
           this.#numberOfStoredRequests++;
           this.#numberOfStoredBytes += body.length;
 
-          return Promise.all([
-            promiseA,
-            this.#db.put(etag, body)
-          ]);
+          return Promise.all([promiseA, this.#db.put(etag, body)]);
         }
       } catch (e) {
         console.error(e);
@@ -102,7 +99,10 @@ export class ETagCacheLevelDB {
         this.#numberOfLoadedRequests++;
         this.#numberOfLoadedBytes += entry.length;
 
-        return new Response(entry, { status: 200 });
+        return new Response(entry, {
+          status: 200,
+          statusText: "OK from cache"
+        });
       }
     } catch (e) {
       console.error(e);
@@ -112,9 +112,9 @@ export class ETagCacheLevelDB {
 
 /**
  * Strips away etag flags (weak ant the like)
- * @param {string} etag 
+ * @param {string} etag
  * @returns {string} raw etag
  */
 export function rawTagData(etag) {
-  return etag && etag.replace(/W\//, "");
+  return etag?.replace(/W\//, "");
 }
