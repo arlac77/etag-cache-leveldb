@@ -10,7 +10,7 @@ if (!globalThis.Response) {
 }
 
 test("header store load", async t => {
-  const dir = new URL("../build", import.meta.url).pathname;
+  const dir = new URL("../build/cache1", import.meta.url).pathname;
   await mkdir(dir, { recursive: true });
 
   const db = await levelup(leveldown(dir));
@@ -50,4 +50,20 @@ test("header store load", async t => {
   t.true(cache.statistics.numberOfLoadedBytes > 1000);
   t.is(cache.statistics.numberOfStoredRequests,1);
   t.true(cache.statistics.numberOfStoredBytes > 1000);
+});
+
+
+test("load empty cache", async t => {
+  const dir = new URL("../build/cache2", import.meta.url).pathname;
+  await mkdir(dir, { recursive: true });
+
+  const db = await levelup(leveldown(dir));
+
+  const cache = new ETagCacheLevelDB(db);
+
+  const url = "https://api.github.com/";
+
+  const response = await fetch(url);
+  const cachedResponse = await cache.loadResponse(response);
+  t.false(cachedResponse.ok);
 });

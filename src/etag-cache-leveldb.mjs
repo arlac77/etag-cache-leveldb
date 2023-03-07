@@ -106,6 +106,10 @@ export class ETagCacheLevelDB {
       }
     } catch (e) {
       console.error(e);
+      return new Response("", {
+        status: 404,
+        statusText: e.message
+      });
     }
   }
 }
