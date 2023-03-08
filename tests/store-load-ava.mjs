@@ -2,12 +2,7 @@ import test from "ava";
 import { mkdir } from "node:fs/promises";
 import levelup from "levelup";
 import leveldown from "leveldown";
-import fetch, { Response } from "node-fetch";
 import { ETagCacheLevelDB, rawTagData } from "etag-cache-leveldb";
-
-if (!globalThis.Response) {
-  globalThis.Response = Response;
-}
 
 test("header store load", async t => {
   const dir = new URL("../build/cache1", import.meta.url).pathname;
@@ -51,7 +46,6 @@ test("header store load", async t => {
   t.is(cache.statistics.numberOfStoredRequests,1);
   t.true(cache.statistics.numberOfStoredBytes > 1000);
 });
-
 
 test("load empty cache", async t => {
   const dir = new URL("../build/cache2", import.meta.url).pathname;
