@@ -1,3 +1,5 @@
+import { streamToUint8Array } from "browser-stream-util";
+
 /**
  * Stores etags and bodies into leveldb.
  * Reconstructs response with body if etag or url matches.
@@ -60,15 +62,7 @@ export class ETagCacheLevelDB {
 
         if (etag) {
           const promiseA = this.#db.put(response.url, etag);
-
-          const chunks = [];
-
-          for await (const chunk of response.body) {
-            chunks.push(chunk);
-          }
-
-          const body = chunks.join("");
-
+          const body = await streamToUint8Array(response.body);
           this.#numberOfStoredRequests++;
           this.#numberOfStoredBytes += body.length;
 
@@ -81,14 +75,14 @@ export class ETagCacheLevelDB {
   }
 
   /**
-   * Constructs a new Response feed from the cahce is a matching etag is found in the cache.
+   * Constructs a new Response feed from the cache is a matching etag is found in the cache.
    * @param {Response} response as provided by fetch
    * @returns {Response}
    */
   async loadResponse(response) {
-    let etag = rawTagData(response.headers.get("etag"));
-
     try {
+      const etag = rawTagData(response.headers.get("etag"));
+
       if (!etag) {
         etag = await this.#db.get(response.url);
       }
@@ -99,14 +93,14 @@ export class ETagCacheLevelDB {
         this.#numberOfLoadedRequests++;
         this.#numberOfLoadedBytes += entry.length;
 
-        return new Response(entry, {
+        return new Response(entry.buffer, {
           status: 200,
           statusText: "OK from cache"
         });
       }
     } catch (e) {
       console.error(e);
-      return new Response("", {
+      return new Response(undefined, {
         status: 404,
         statusText: e.message
       });
