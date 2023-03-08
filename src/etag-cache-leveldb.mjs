@@ -27,7 +27,6 @@ export class ETagCacheLevelDB {
   async addHeaders(url, headers) {
     try {
       const entry = await this.#db.get(url);
-
       headers["If-None-Match"] = entry.toString();
       return true;
     } catch {}
@@ -65,8 +64,7 @@ export class ETagCacheLevelDB {
           const body = await streamToUint8Array(response.body);
           this.#numberOfStoredRequests++;
           this.#numberOfStoredBytes += body.length;
-
-          return Promise.all([promiseA, this.#db.put(etag, body)]);
+          return Promise.all([promiseA, this.#db.put(etag, Buffer.from(body))]);
         }
       } catch (e) {
         console.error(e);
@@ -92,8 +90,7 @@ export class ETagCacheLevelDB {
       if (entry) {
         this.#numberOfLoadedRequests++;
         this.#numberOfLoadedBytes += entry.length;
-
-        return new Response(entry.buffer, {
+        return new Response( entry, {
           status: 200,
           statusText: "OK from cache"
         });
