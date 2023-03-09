@@ -100,7 +100,7 @@ Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/
 
 ### loadResponse
 
-Constructs a new Response feed from the cahce is a matching etag is found in the cache.
+Constructs a new Response feed from the cache is a matching etag is found in the cache.
 
 #### Parameters
 
