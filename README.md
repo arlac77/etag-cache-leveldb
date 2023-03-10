@@ -80,7 +80,7 @@ Adds the "If-None-Match" header if etag is found for the url.
 *   `url` **([string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) | [URL](https://developer.mozilla.org/docs/Web/API/URL/URL))**&#x20;
 *   `headers` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**&#x20;
 
-Returns **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** true if etag was found in cache and hader has been added
+Returns **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** true if etag was found in cache and header has been added
 
 ### statistics
 
@@ -91,6 +91,10 @@ Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/G
 ### storeResponse
 
 Stores response in the cache.
+Two entries are stored:
+
+*   url : etag
+*   etag : body
 
 #### Parameters
 
