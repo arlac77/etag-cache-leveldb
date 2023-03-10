@@ -22,7 +22,7 @@ export class ETagCacheLevelDB {
    * Adds the "If-None-Match" header if etag is found for the url.
    * @param {string|URL} url
    * @param {Object} headers
-   * @returns {boolean} true if etag was found in cache and hader has been added
+   * @returns {boolean} true if etag was found in cache and header has been added
    */
   async addHeaders(url, headers) {
     try {
@@ -49,6 +49,9 @@ export class ETagCacheLevelDB {
 
   /**
    * Stores response in the cache.
+   * Two entries are stored:
+   * - url : etag
+   * - etag : body
    * @param {Response} response as produced by fetch
    * @returns {Promise<undefined>}
    */
