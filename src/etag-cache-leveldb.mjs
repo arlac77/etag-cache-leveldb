@@ -82,7 +82,7 @@ export class ETagCacheLevelDB {
    */
   async loadResponse(response) {
     try {
-      const etag = rawTagData(response.headers.get("etag"));
+      let etag = rawTagData(response.headers.get("etag"));
 
       if (!etag) {
         etag = await this.#db.get(response.url);
