@@ -80,7 +80,7 @@ Adds the "If-None-Match" header if etag is found for the url.
 *   `url` **([string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) | [URL](https://developer.mozilla.org/docs/Web/API/URL/URL))**&#x20;
 *   `headers` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**&#x20;
 
-Returns **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** true if etag was found in cache and header has been added
+Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)<[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)>** true if etag was found in cache and header has been added
 
 ### statistics
 
@@ -110,7 +110,7 @@ Constructs a new Response feed from the cache is a matching etag is found in the
 
 *   `response` **[Response](https://developer.mozilla.org/docs/Web/Guide/HTML/HTML5)** as provided by fetch
 
-Returns **[Response](https://developer.mozilla.org/docs/Web/Guide/HTML/HTML5)**&#x20;
+Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)<[Response](https://developer.mozilla.org/docs/Web/Guide/HTML/HTML5)>**&#x20;
 
 ## rawTagData
 
