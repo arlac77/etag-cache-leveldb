@@ -53,7 +53,7 @@ export class ETagCacheLevelDB {
    * - url : etag
    * - etag : body
    * @param {Response} response as produced by fetch
-   * @returns {Promise<undefined>}
+   * @returns {Promise<any>}
    */
   async storeResponse(response) {
     if (response.ok) {
@@ -105,13 +105,14 @@ export class ETagCacheLevelDB {
         statusText: e.message
       });
     }
+    return response;
   }
 }
 
 /**
  * Strips away etag flags (weak ant the like)
- * @param {string} etag
- * @returns {string} raw etag
+ * @param {string|null} etag
+ * @returns {string|undefined} raw etag
  */
 export function rawTagData(etag) {
   return etag?.replace(/W\//, "");
