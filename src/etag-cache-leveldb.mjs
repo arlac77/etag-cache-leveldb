@@ -76,7 +76,7 @@ export class ETagCacheLevelDB {
   }
 
   /**
-   * Constructs a new Response feed from the cache is a matching etag is found in the cache.
+   * Constructs a new Response feed from the cache if a matching etag is found in the cache.
    * @param {Response} response as provided by fetch
    * @returns {Promise<Response>}
    */
@@ -110,7 +110,7 @@ export class ETagCacheLevelDB {
 }
 
 /**
- * Strips away etag flags (weak ant the like)
+ * Strips away etag flags (weak and the like)
  * @param {string|null} etag
  * @returns {string|undefined} raw etag
  */
