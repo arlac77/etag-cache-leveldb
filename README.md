@@ -104,7 +104,7 @@ Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/
 
 ### loadResponse
 
-Constructs a new Response feed from the cache is a matching etag is found in the cache.
+Constructs a new Response feed from the cache if a matching etag is found in the cache.
 
 #### Parameters
 
@@ -114,7 +114,7 @@ Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/
 
 ## rawTagData
 
-Strips away etag flags (weak ant the like)
+Strips away etag flags (weak and the like)
 
 ### Parameters
 
