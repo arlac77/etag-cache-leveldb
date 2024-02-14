@@ -5,13 +5,13 @@
     "access": "public",
     "provenance": true
   },
+  "types": "./types/etag-cache-leveldb.d.mts",
   "exports": {
     ".": {
-      "types": "./types/etag-cache-leveldb.d.mts",
-      "default": "./src/etag-cache-leveldb.mjs"
+      "default": "./src/etag-cache-leveldb.mjs",
+      "types": "./types/etag-cache-leveldb.d.mts"
     }
   },
-  "types": "./types/etag-cache-leveldb.d.mts",
   "description": "etag cache based on leveldb",
   "keywords": [
     "cache",
