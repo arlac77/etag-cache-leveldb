@@ -6,4 +6,5 @@ bun.lockb
 *.log
 *.dump
 *.node
+types
 .test
