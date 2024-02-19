@@ -14,7 +14,7 @@ export class ETagCacheLevelDB {
   #numberOfLoadedRequests = 0;
   #numberOfLoadedBytes = 0;
 
-  constructor(db, options) {
+  constructor(db) {
     this.#db = db;
   }
 
