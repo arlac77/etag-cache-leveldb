@@ -70,7 +70,6 @@ etag : body
 ### Parameters
 
 *   `db` &#x20;
-*   `options` &#x20;
 
 ### addHeaders
 
