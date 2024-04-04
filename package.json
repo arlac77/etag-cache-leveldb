@@ -49,7 +49,7 @@
     "documentation": "^14.0.3",
     "leveldown": "^6.1.1",
     "semantic-release": "^23.0.7",
-    "typescript": "^5.4.3"
+    "typescript": "^5.4.4"
   },
   "repository": {
     "type": "git",
