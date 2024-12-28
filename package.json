@@ -8,8 +8,8 @@
   "types": "./types/etag-cache-leveldb.d.mts",
   "exports": {
     ".": {
-      "default": "./src/etag-cache-leveldb.mjs",
-      "types": "./types/etag-cache-leveldb.d.mts"
+      "types": "./types/etag-cache-leveldb.d.mts",
+      "default": "./src/etag-cache-leveldb.mjs"
     }
   },
   "description": "etag cache based on leveldb",
